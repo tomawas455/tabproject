@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: frontend
+    depends_on:
+      - backend
+    build: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3000:3000"
+  backend:
+    container_name: backend
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/usr/src/app
+    build: ./backend
+    ports:
+      - "8080:5000"
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    ports:
+      - "2137:5432"
+    environment:
+      - POSTGRES_DB=tabproject
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
