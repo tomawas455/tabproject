@@ -1,8 +1,9 @@
-from flask import Flask, json
+from flask import Flask, json, g, session
 from flask_migrate import Migrate
 from werkzeug.exceptions import HTTPException
 
 from models.db import db
+from models.users import User
 
 app = Flask(__name__)
 
@@ -26,6 +27,15 @@ def handle_exception(e):
     })
     response.content_type = "application/json"
     return response
+
+
+@app.before_app_request
+def load_logged_in_user():
+    session_id = session.get('session_id')
+    if session_id is None:
+        g.user = None
+    else:
+        g.user = User.query.filter_by(id=session_id).first()
 
 
 def create_app():

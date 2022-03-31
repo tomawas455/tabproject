@@ -1,5 +1,3 @@
-import functools
-
 from flask import (
     Blueprint, request, g, session
 )
@@ -58,48 +56,3 @@ def login():
 def logout():
     session.clear()
     return {}
-
-
-@bp.before_app_request
-def load_logged_in_user():
-    session_id = session.get('session_id')
-    if session_id is None:
-        g.user = None
-    else:
-        g.user = User.query.filter_by(id=session_id).first()
-
-
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            raise Unauthorized("You need to login to see this")
-
-        return view(**kwargs)
-
-    return wrapped_view
-
-
-def check_role(role_name):
-    if g.user is None or g.user.role.name != role_name:
-        raise Unauthorized(
-            "You need to have different permissions to see this"
-        )
-
-
-def only_worker(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        check_role('worker')
-        return view(**kwargs)
-
-    return wrapped_view
-
-
-def only_admin(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        check_role('administrator')
-        return view(**kwargs)
-
-    return wrapped_view
