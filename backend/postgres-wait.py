@@ -1,4 +1,5 @@
 import socket
+import sys
 from time import sleep
 
 
@@ -13,5 +14,5 @@ def is_open(host, port):
 
 
 while not is_open("db", 5432):
-    print("Waiting for postgres")
+    print("Waiting for postgres", file=sys.stderr)
     sleep(1)
