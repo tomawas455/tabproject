@@ -29,7 +29,7 @@ def handle_exception(e):
     return response
 
 
-@app.before_app_request
+@app.before_request
 def load_logged_in_user():
     session_id = session.get('session_id')
     if session_id is None:

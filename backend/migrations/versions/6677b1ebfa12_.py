@@ -27,7 +27,7 @@ def upgrade():
     password = "pbkdf2:sha256:260000$rMoTDlGpKGfHahrM$df5ebf49873a1a92c931c0bc9a5fdf6b6dbb9bb9bb39df1e6a77ae9075e4c979"
     op.execute(
         """INSERT INTO users
-            (name, surname, email, role, password) VALUES
+            (name, surname, email, role_id, password) VALUES
             ('admin', 'istrator', 'admin@istrat.or', (SELECT id FROM roles WHERE name='administrator'), '{0}'),
             ('worker', '1', 'worker1@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
             ('worker', '2', 'worker2@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
