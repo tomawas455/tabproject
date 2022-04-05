@@ -2,7 +2,6 @@ import functools
 
 from flask import g
 from werkzeug.exceptions import Unauthorized
-import sys
 
 
 def login_required(view):
@@ -17,7 +16,6 @@ def login_required(view):
 
 
 def check_roles(role_names):
-    print(g.user.role.name, file=sys.stderr)
     if g.user is None or g.user.role.name not in role_names:
         raise Unauthorized(
             "You need to have different permissions to see this"
