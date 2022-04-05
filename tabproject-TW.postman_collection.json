@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ec9e1dc5-c27d-483f-81f7-3e4cf055516c",
+		"_postman_id": "25785688-ff45-4a63-b934-ef6baf7751d3",
 		"name": "tabproject-TW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -142,14 +142,14 @@
 		{
 			"name": "change user role",
 			"request": {
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
 							"key": "role_id",
-							"value": "2",
+							"value": "1",
 							"description": "1 = user, 2 = worker, 3 = admin",
 							"type": "default"
 						},

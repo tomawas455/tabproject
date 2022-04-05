@@ -28,7 +28,7 @@ def get_users():
     }
 
 
-@bp.route('/<int:user_id>/change_role', methods=['PUT'])
+@bp.route('/<int:user_id>/change_role', methods=['PATCH'])
 @only_admin
 def change_role(user_id):
     user = User.query.filter_by(id=user_id).first()
