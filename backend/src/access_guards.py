@@ -16,7 +16,7 @@ def login_required(view):
 
 
 def check_roles(role_names):
-    if g.user is None or g.user.role.name not in list(role_names):
+    if g.user is None or g.user.role.name not in role_names:
         raise Unauthorized(
             "You need to have different permissions to see this"
         )
@@ -25,7 +25,7 @@ def check_roles(role_names):
 def only_user(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        check_roles('user')
+        check_roles(['user'])
         return view(**kwargs)
 
     return wrapped_view
@@ -34,7 +34,7 @@ def only_user(view):
 def only_worker(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        check_roles('worker')
+        check_roles(['worker'])
         return view(**kwargs)
 
     return wrapped_view
@@ -43,7 +43,7 @@ def only_worker(view):
 def only_admin(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        check_roles('administrator')
+        check_roles(['administrator'])
         return view(**kwargs)
 
     return wrapped_view

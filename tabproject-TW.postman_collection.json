@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "53ea383b-728f-42aa-ac19-cdb6e80c07e7",
+		"_postman_id": "25785688-ff45-4a63-b934-ef6baf7751d3",
 		"name": "tabproject-TW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16,11 +16,13 @@
 						{
 							"key": "email",
 							"value": "admin@istrat.or",
+							"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nuser1@user.mail\nuser2@user.mail\nkrzysztof@jaworek.mail",
 							"type": "default"
 						},
 						{
 							"key": "password",
 							"value": "12345678",
+							"description": "all accounts have password 12345678",
 							"type": "default"
 						}
 					]
@@ -100,6 +102,76 @@
 					"path": [
 						"auth",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/?page=1&per_page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "optiona, 1 by default"
+						},
+						{
+							"key": "per_page",
+							"value": "1",
+							"description": "optional, 20 by default"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change user role",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "role_id",
+							"value": "1",
+							"description": "1 = user, 2 = worker, 3 = admin",
+							"type": "default"
+						},
+						{
+							"key": "",
+							"value": "",
+							"description": "that 4 in url is user id",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/4/change_role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"4",
+						"change_role"
 					]
 				}
 			},
