@@ -7,6 +7,7 @@ services:
     build: ./frontend
     volumes:
       - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "3000:3000"
   backend:
@@ -27,4 +28,3 @@ services:
       - POSTGRES_DB=tabproject
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-
