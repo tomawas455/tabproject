@@ -92,4 +92,7 @@ def upgrade():
     )
 
 def downgrade():
-    pass
+    op.execute("DELETE FROM courses")
+    op.execute("DELETE FROM trainings")
+    op.execute("DELETE FROM participations")
+    op.execute("DELETE FROM comments")
