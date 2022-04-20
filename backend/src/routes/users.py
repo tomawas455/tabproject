@@ -1,14 +1,20 @@
 from flask import (
-    Blueprint, request
+    Blueprint, request, g
 )
 from werkzeug.exceptions import NotFound
 
-from access_guards import only_admin
+from access_guards import only_admin, login_required
 
 from models.db import db
 from models.users import User, Role
 
 bp = Blueprint('users', __name__, url_prefix='/users')
+
+
+@bp.route('/current')
+@login_required
+def get_current_user():
+    return g.user.to_dict()
 
 
 @bp.route('/')
@@ -23,7 +29,7 @@ def get_users():
         'pages': users_pages.pages,
         'page': users_pages.page,
         'page_size': users_pages.per_page,
-        'is_last': users_pages.has_next,
+        'is_last': not users_pages.has_next,
         'roles': [role.to_dict() for role in all_roles]
     }
 
