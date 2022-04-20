@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25785688-ff45-4a63-b934-ef6baf7751d3",
+		"_postman_id": "0e16a8f7-25a7-4b4e-8793-6cc1d23bcbeb",
 		"name": "tabproject-TW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -140,6 +140,26 @@
 			"response": []
 		},
 		{
+			"name": "get currently logged in user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/current",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "change user role",
 			"request": {
 				"method": "PATCH",
@@ -172,6 +192,254 @@
 						"users",
 						"4",
 						"change_role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get training by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/trainings/1?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trainings",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"description": "that 1 in url is training id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get trainings page",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"page\":1,\n    \"per_page\":2,\n    \"tags\":[1, 2],\n    \"cities\":[5],\n    \"name\":\"Kurs\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/trainings/?&&&&&",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trainings",
+						""
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null,
+							"description": "all body fields are optional"
+						},
+						{
+							"key": null,
+							"value": null,
+							"description": "tags - ids of tags to be found"
+						},
+						{
+							"key": null,
+							"value": null,
+							"description": "cities - ids of cities training should take place in"
+						},
+						{
+							"key": null,
+							"value": null,
+							"description": "name - full or part of name of training's (course) name"
+						},
+						{
+							"key": null,
+							"value": null,
+							"description": "page, per_page - page and items on page, defaults to 1 and 20"
+						},
+						{
+							"key": null,
+							"value": null,
+							"description": "and that ?&&&&& in url can and should be removed, it's there because of these notes"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create training",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "price",
+							"value": "4.20",
+							"description": "price of this edition of course",
+							"type": "default"
+						},
+						{
+							"key": "places_amount",
+							"value": "420",
+							"description": "amount of places in this edition of course",
+							"type": "default"
+						},
+						{
+							"key": "begin_date",
+							"value": "2022-04-15T15:50:00.000000Z",
+							"description": "begin date of this edition, in toJSON js's format",
+							"type": "default"
+						},
+						{
+							"key": "end_date",
+							"value": "2022-06-20T15:50:00.000000Z",
+							"description": "end date of this edition",
+							"type": "default"
+						},
+						{
+							"key": "enrolment_begin_date",
+							"value": "2022-04-10T15:50:00.000000Z",
+							"description": "enrolment begin for this edition",
+							"type": "default"
+						},
+						{
+							"key": "enrolment_end_date",
+							"value": "2022-04-15T15:49:00.000000Z",
+							"description": "enrolment end for this edition",
+							"type": "default"
+						},
+						{
+							"key": "course_id",
+							"value": "1",
+							"description": "whis course this edition is about",
+							"type": "default"
+						},
+						{
+							"key": "place_id",
+							"value": "1",
+							"description": "id of place where this edition, well, takes place",
+							"type": "default"
+						},
+						{
+							"key": "instructor_id",
+							"value": "2",
+							"description": "who will lead/run/teach in this edition",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/trainings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit training with given id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "",
+							"description": "thet 7 in url is training id",
+							"type": "default"
+						},
+						{
+							"key": "price",
+							"value": "4.21",
+							"description": "price of this edition of course",
+							"type": "default"
+						},
+						{
+							"key": "places_amount",
+							"value": "421",
+							"description": "amount of places in this edition of course",
+							"type": "default"
+						},
+						{
+							"key": "begin_date",
+							"value": "2022-04-16T15:50:00.000000Z",
+							"description": "begin date of this edition, in toJSON js's format",
+							"type": "default"
+						},
+						{
+							"key": "end_date",
+							"value": "2022-06-21T15:50:00.000000Z",
+							"description": "end date of this edition",
+							"type": "default"
+						},
+						{
+							"key": "enrolment_begin_date",
+							"value": "2022-04-11T15:50:00.000000Z",
+							"description": "enrolment begin for this edition",
+							"type": "default"
+						},
+						{
+							"key": "enrolment_end_date",
+							"value": "2022-04-16T15:49:00.000000Z",
+							"description": "enrolment end for this edition",
+							"type": "default"
+						},
+						{
+							"key": "place_id",
+							"value": "2",
+							"description": "id of place where this edition, well, takes place",
+							"type": "default"
+						},
+						{
+							"key": "instructor_id",
+							"value": "3",
+							"description": "who will lead/run/teach in this edition",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/trainings/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"trainings",
+						"6"
 					]
 				}
 			},
