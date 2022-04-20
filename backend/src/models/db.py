@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.attributes import QueryableAttribute
@@ -50,7 +52,10 @@ class BaseModel(db.Model):
             if check in _hide or key in hidden:
                 continue
             if check in show or key in default:
-                ret_data[key] = getattr(self, key)
+                value = getattr(self, key)
+                if isinstance(value, datetime):
+                    value = value.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                ret_data[key] = value
 
         for key in relationships:
             if key.startswith("_"):

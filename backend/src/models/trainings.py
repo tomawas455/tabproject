@@ -69,6 +69,7 @@ class Training(BaseModel):
         'User', foreign_keys=instructor_id, lazy='subquery')
 
     meetings = db.relationship(Meeting)
+    participants = db.relationship(Participation)
 
     _default_fields = [
         'id', 'price',

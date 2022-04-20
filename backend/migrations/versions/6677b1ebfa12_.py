@@ -15,6 +15,7 @@ down_revision = '29ef7fb1d86b'
 branch_labels = None
 depends_on = None
 
+
 def upgrade():
     op.execute(
         """INSERT INTO roles
@@ -31,8 +32,19 @@ def upgrade():
             ('admin', 'istrator', 'admin@istrat.or', (SELECT id FROM roles WHERE name='administrator'), '{0}'),
             ('worker', '1', 'worker1@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
             ('worker', '2', 'worker2@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
+            ('worker', '3', 'worker3@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
+            ('worker', '4', 'worker4@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
+            ('worker', '5', 'worker5@worker.mail', (SELECT id FROM roles WHERE name='worker'), '{0}'),
             ('user', '1', 'user1@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
             ('user', '2', 'user2@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '3', 'user3@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '4', 'user4@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '5', 'user5@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '6', 'user6@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '7', 'user7@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '8', 'user8@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '9', 'user9@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
+            ('user', '10', 'user10@user.mail', (SELECT id FROM roles WHERE name='user'), '{0}'),
             ('Krzysztof', 'Jaworek', 'krzysztof@jaworek.mail', (SELECT id FROM roles WHERE name='user'), '{0}')
         """.format(password)
     )
