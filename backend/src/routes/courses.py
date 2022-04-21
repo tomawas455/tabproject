@@ -1,4 +1,3 @@
-from operator import and_
 from flask import (
     Blueprint, request, session
 )
@@ -10,9 +9,10 @@ from werkzeug.exceptions import (
 from access_guards import only_worker
 
 from models.db import db
-from models.courses import Course, course_tags_M2M
+from models.courses import Course
 from models.users import User
 from models.courses_utils import Multimedia, Tag
+from models.trainings import Training
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
@@ -66,7 +66,7 @@ def create_course():
         if not check_list(data_json["multimedias"]):
             raise BadRequest('"multimedias" should be a non-empty list!')
         multimedias = db.session.query(Multimedia).filter(Multimedia.id.in_(data_json["multimedias"]))
-        new_course.multimedias.extend(multimedias) #TODO: przetestować
+        new_course.multimedias.extend(multimedias)
     db.session.add(new_course)
     db.session.commit()
     return new_course.to_dict()
@@ -96,13 +96,22 @@ def get_courses():
     }
 
 
+def has_someone_enrolled(course : Course):
+    trainings = db.session.query(Training).filter_by(course_id=course.id)
+    for training in trainings:
+        if training.free_places_amount < training.places_amount:
+            return True
+    return False
+
+
 @bp.route('/<int:course_id>/edit', methods=['PATCH'])
 @only_worker
 def edit_course(course_id):
     course = Course.query.filter_by(id=course_id).first()
     if course is None:
         raise NotFound("Course with that id does not exist!")
-    #TODO: czy nikt sie nie zapisal
+    if has_someone_enrolled(course):
+        raise BadRequest("Someone has already enrolled on that course!")
     data_json = request.get_json()
     if "name" in data_json:
         if not check_string(data_json["name"]):
@@ -126,6 +135,9 @@ def edit_course(course_id):
             raise BadRequest('"delete_tags" should be a non-empty list!')
         tags_to_delete = db.session.query(Tag).filter(Tag.id.in_(data_json["delete_tags"]))
         for tag in tags_to_delete:
-            course.tags.remove(tag)
+            if tag in course.tags:
+                course.tags.remove(tag)
+            else:
+                raise BadRequest(f'Course has no tag "{tag.name} (id: {tag.id})" ')
     db.session.commit()
     return course.to_dict()
