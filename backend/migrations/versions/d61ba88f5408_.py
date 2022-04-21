@@ -125,3 +125,4 @@ def downgrade():
     op.execute("DELETE FROM trainings")
     op.execute("DELETE FROM participations")
     op.execute("DELETE FROM comments")
+    op.execute("DELETE FROM course_tags")
