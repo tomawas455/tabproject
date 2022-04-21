@@ -91,34 +91,6 @@ def upgrade():
         """
     )
 
-    op.execute(
-        """ INSERT INTO course_tags
-        (course_id, tag_id) VALUES
-        ((SELECT id FROM courses WHERE name='Jazda rowerem'), 
-            (SELECT id FROM tags WHERE name='fizyka')),
-        ((SELECT id FROM courses WHERE name='Jazda rowerem'), 
-            (SELECT id FROM tags WHERE name='rozwoj osobisty')),
-        ((SELECT id FROM courses WHERE name='Kurs C++'), 
-            (SELECT id FROM tags WHERE name='c++')),
-        ((SELECT id FROM courses WHERE name='Kurs C++'), 
-            (SELECT id FROM tags WHERE name='programowanie')),
-        ((SELECT id FROM courses WHERE name='Kurs czytania'), 
-            (SELECT id FROM tags WHERE name='edukacja')),
-        ((SELECT id FROM courses WHERE name='Kurs czytania'), 
-            (SELECT id FROM tags WHERE name='finanse')),
-        ((SELECT id FROM courses WHERE name='Kurs czytania'), 
-            (SELECT id FROM tags WHERE name='rozwoj osobisty')),
-        ((SELECT id FROM courses WHERE name='Bazy danych'), 
-            (SELECT id FROM tags WHERE name='programowanie')),
-        ((SELECT id FROM courses WHERE name='Bazy danych'), 
-            (SELECT id FROM tags WHERE name='rozwoj osobisty')),
-        ((SELECT id FROM courses WHERE name='Bazy danych'), 
-            (SELECT id FROM tags WHERE name='c++')),
-        ((SELECT id FROM courses WHERE name='Bazy danych'), 
-            (SELECT id FROM tags WHERE name='python'))
-        """
-    )
-
 
 def downgrade():
     op.execute("DELETE FROM courses")

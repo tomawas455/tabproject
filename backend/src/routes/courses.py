@@ -41,6 +41,8 @@ def check_list(l):
 @only_worker
 def create_course():
     data_json = request.get_json()
+    if not data_json:
+        raise BadRequest()
     required_fields = ("name", "description", "expense")
     if(any(field not in data_json for field in required_fields)):
         raise BadRequest(f"Missing required fields: "
