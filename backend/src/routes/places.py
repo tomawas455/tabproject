@@ -3,6 +3,8 @@ from models.courses_utils import Place, City
 from werkzeug.exceptions import BadRequest
 from models.db import db
 
+from access_guards import only_worker
+
 bp = Blueprint('places', __name__, url_prefix='/places')
 
 @bp.route('/', methods=['GET'])
@@ -11,6 +13,7 @@ def get_places():
     return json.jsonify([place.to_dict() for place in places])
 
 @bp.route('/', methods=['POST'])
+@only_worker
 def create_place():
     request_body = request.form
     attrs = [

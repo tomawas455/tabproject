@@ -3,6 +3,8 @@ from models.courses_utils import Tag
 from werkzeug.exceptions import BadRequest
 from models.db import db
 
+from access_guards import only_worker
+
 bp = Blueprint('tags', __name__, url_prefix='/tags')
 
 
@@ -12,6 +14,7 @@ def get_tags():
     return json.jsonify([tag.to_dict() for tag in tags])
 
 @bp.route('/', methods=['POST'])
+@only_worker
 def create_tag():
     name = request.form.get('name')
     if name == "":
