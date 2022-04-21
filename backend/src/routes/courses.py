@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, request, session
+    Blueprint, request, session, g
 )
 
 from werkzeug.exceptions import (
@@ -17,13 +17,13 @@ from models.trainings import Training
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
 
-def check_string(s):
+def is_correct_string(s):
     if type(s)!=str or len(s) == 0:
         return False
     return True
 
 
-def check_number(n):
+def is_correct_number(n):
     try:
         float(n)
     except (ValueError, TypeError):
@@ -31,7 +31,7 @@ def check_number(n):
     return True
 
 
-def check_list(l):
+def is_correct_list(l):
     if type(l)!=list or len(l) == 0:
         return False
     return True
@@ -46,24 +46,22 @@ def create_course():
     required_fields = ("name", "description", "expense")
     if(any(field not in data_json for field in required_fields)):
         raise BadRequest(f"Missing required fields: "
-            f"{''.join([field + ', ' for field in required_fields if field not in data_json])[:-2]}")
-    current_user_id = session["session_id"]
-    current_user = User.query.filter_by(id=current_user_id).first()
-    if not check_string(data_json["name"]):
+            f"{', '.join([field for field in required_fields if field not in data_json])}")
+    if not is_correct_string(data_json["name"]):
         raise BadRequest('"name" should be a non-empty string!')
-    if not check_string(data_json["description"]):
+    if not is_correct_string(data_json["description"]):
         raise BadRequest('"description" should be a non-empty string!')
-    if not check_number(data_json["expense"]):
+    if not is_correct_number(data_json["expense"]):
         raise BadRequest('"expense" should be a number!')
     new_course = Course(data_json["name"], data_json["description"],
-                    data_json["expense"], current_user)
+                    data_json["expense"], g.user)
     if "tags" in data_json:
-        if not check_list(data_json["tags"]):
+        if not is_correct_list(data_json["tags"]):
             raise BadRequest('"tags" should be a non-empty list!')
         tags = db.session.query(Tag).filter(Tag.id.in_(data_json["tags"]))
         new_course.tags.extend(tags)
     if "multimedias" in data_json:
-        if not check_list(data_json["multimedias"]):
+        if not is_correct_list(data_json["multimedias"]):
             raise BadRequest('"multimedias" should be a non-empty list!')
         multimedias = db.session.query(Multimedia).filter(Multimedia.id.in_(data_json["multimedias"]))
         new_course.multimedias.extend(multimedias)
@@ -84,9 +82,9 @@ def get_course(course_id):
 @bp.route('/', methods=['GET'])
 @only_worker
 def get_courses():
-    courses_page = Course.query.\
-        order_by(Course.id).\
-        paginate(error_out=False, max_per_page=9999)
+    courses_page = Course.query\
+        .order_by(Course.id)\
+        .paginate(error_out=False, max_per_page=9999)
     return {
         "courses": [course.to_dict() for course in courses_page.items],
         "pages": courses_page.pages,
@@ -114,30 +112,23 @@ def edit_course(course_id):
         raise BadRequest("Someone has already enrolled on that course!")
     data_json = request.get_json()
     if "name" in data_json:
-        if not check_string(data_json["name"]):
+        if not is_correct_string(data_json["name"]):
             raise BadRequest('"name" should be a non-empty string!')
         course.name = data_json["name"]
     if "description" in data_json:
-        if not check_string(data_json["description"]):
+        if not is_correct_string(data_json["description"]):
             raise BadRequest('"description" should be a non-empty string!')
         course.description = data_json["description"]
     if "expense" in data_json:
-        if not check_number(data_json["expense"]):
+        if not is_correct_number(data_json["expense"]):
             raise BadRequest('"expense" should be a number!')
         course.expense = data_json["expense"]
-    if "add_tags" in data_json:
-        if not check_list(data_json["add_tags"]):
-            raise BadRequest('"add_tags" should be a non-empty list!')
-        tags_to_add = db.session.query(Tag).filter(Tag.id.in_(data_json["add_tags"]))
-        course.tags.extend(tags_to_add)
-    if "delete_tags" in data_json:
-        if not check_list(data_json["delete_tags"]):
-            raise BadRequest('"delete_tags" should be a non-empty list!')
-        tags_to_delete = db.session.query(Tag).filter(Tag.id.in_(data_json["delete_tags"]))
-        for tag in tags_to_delete:
-            if tag in course.tags:
-                course.tags.remove(tag)
-            else:
-                raise BadRequest(f'Course has no tag "{tag.name} (id: {tag.id})" ')
+    if "tags" in data_json:
+        if not is_correct_list(data_json["tags"]):
+            raise BadRequest('"tags" should be a non-empty list!')
+        tags = db.session.query(Tag).filter(Tag.id.in_(data_json["tags"]))
+        if len([tags]) < len(data_json["tags"]):
+            raise BadRequest(f"Unknown tags: {', '.join(str(id) for id in data_json['tags'] if id not in [tag.id for tag in tags])}")
+        course.tags = list(tags)
     db.session.commit()
     return course.to_dict()
