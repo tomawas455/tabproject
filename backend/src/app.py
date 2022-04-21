@@ -40,10 +40,13 @@ def load_logged_in_user():
 
 def create_app():
     from routes import (
-        auth, users, trainings
+        auth, users, trainings, tags, places, cities
     )
     app.register_blueprint(auth.bp)
     app.register_blueprint(users.bp)
+    app.register_blueprint(tags.bp)
+    app.register_blueprint(places.bp)
+    app.register_blueprint(cities.bp)
     app.register_blueprint(trainings.bp)
 
 
