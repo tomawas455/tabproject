@@ -33,7 +33,7 @@ def handle_http_exception(e):
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    """Return JSON instead of HTML for HTTP errors."""
+    """Print traceback on error and return http error on unhandled errors"""
     traceback.print_exception(type(e), e, e.__traceback__)
     return handle_http_exception(
         InternalServerError("You probably gave me bad data, fix your input!"))
