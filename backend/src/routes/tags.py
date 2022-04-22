@@ -17,12 +17,13 @@ def get_tags():
 @only_worker
 def create_tag():
     name = request.form.get('name')
-    if name == "":
+
+    if not name:
         raise BadRequest('Parameter should not be an empty string')
-    tags = Tag.query
-    for tag in tags:
-        if tag.name == name:
-            raise BadRequest('This Tag arleady exist!')
+
+    if Tag.query.filter(Tag.name.ilike(name)).count() > 0:
+        raise BadRequest('This Tag arleady exist!')
+
     tag = Tag(name)
     db.session.add(tag)
     db.session.commit()

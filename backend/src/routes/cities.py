@@ -16,12 +16,13 @@ def get_cities():
 @only_worker
 def create_city():
     name = request.form.get('city')
-    cities = City.query
-    if name == "":
+
+    if not name:
         raise BadRequest('Parameter should not be an empty string')
-    for city in cities:
-        if city.city == name:
-            raise BadRequest('This City arleady exist!')
+
+    if City.query.filter(City.city.ilike(name)).count() > 0:
+        raise BadRequest('This City arleady exist!')
+
     city = City(name)
     db.session.add(city)
     db.session.commit()
