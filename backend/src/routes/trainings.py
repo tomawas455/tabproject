@@ -1,5 +1,3 @@
-import datetime
-
 from flask import Blueprint, request, g
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
@@ -9,7 +7,7 @@ from utils import datetime_from_json
 from models.db import db
 from models.trainings import Training
 from models.courses import Course
-from models.users import User
+from models.users import User, Role
 from models.courses_utils import Tag, Place
 
 bp = Blueprint('trainings', __name__, url_prefix='/trainings')
@@ -32,17 +30,17 @@ def get_trainings():
 
     if json_body is not None:
         tags = json_body.get('tags')
-        if tags is not None:
+        if tags:
             trainings_pages = trainings_pages.join(Training.course).join(
                 Course.tags).filter(Tag.id.in_(tags))
 
         name = json_body.get('name')
-        if name is not None:
+        if name:
             trainings_pages = trainings_pages.join(
                 Training.course).filter(Course.name.ilike('%{}%'.format(name)))
 
         cities = json_body.get('cities')
-        if cities is not None:
+        if cities:
             trainings_pages = trainings_pages.join(
                 Training.place).filter(Place.city_id.in_(cities))
 
@@ -66,6 +64,15 @@ def get_trainings():
     }
 
 
+def get_instructor(instructor_id):
+    instructor = User.query.filter_by(id=instructor_id).join(
+        User.role).filter(Role.name == "worker").first()
+    if instructor is None:
+        raise BadRequest(
+            "User with that id does not exist or is not a worker!")
+    return instructor
+
+
 @bp.route('/', methods=['POST'])
 @only_worker
 def create_training():
@@ -82,9 +89,9 @@ def create_training():
         raise BadRequest("Give me all necessary data to create training!")
     course = Course.query.filter_by(id=attrs[6]).first()
     place = Place.query.filter_by(id=attrs[7]).first()
-    instructor = User.query.filter_by(id=attrs[8]).first()
-    if None in [course, place, instructor]:
-        raise BadRequest("One or more provided ids doesn't exist!")
+    instructor = get_instructor(attrs[8])
+    if None in [course, place]:
+        raise BadRequest("course or place with given id does not exist!")
     training = Training(
         attrs[0], attrs[1], attrs[1],
         datetime_from_json(attrs[2]), datetime_from_json(attrs[3]),
@@ -136,11 +143,15 @@ def edit_training(id):
 
     place_id = request_body.get('place_id')
     if place_id is not None:
-        training.place_id = int(place_id)
+        place = Place.query.filter_by(id=place_id).first()
+        if place is None:
+            raise BadRequest("Place with that id does not exist!")
+        training.place = place
 
     instructor_id = request_body.get('instructor_id')
     if instructor_id is not None:
-        training.instructor_id = int(instructor_id)
+        instructor = get_instructor(instructor_id)
+        training.instructor = instructor
 
     db.session.commit()
     return training.to_dict()

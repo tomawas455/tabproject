@@ -25,13 +25,12 @@ def register():
             "Name and surname need to have at least one character")
     if len(password) < 8:
         raise BadRequest("Password need to have at least 8 characters")
-    email_taken = User.query.filter_by(email=email.lower()).first()
+    email_taken = User.query.filter_by(email=email.lower()).count()
     user_role = Role.query.filter_by(name='user').first()
     if user_role is None:
         raise InternalServerError(
-            "Cannot create user, report this error please"
-        )
-    if email_taken is not None:
+            "Cannot create user, report this error please")
+    if email_taken > 0:
         raise BadRequest("That email is already in use")
     password = generate_password_hash(password)
     new_user = User(email.lower(), name, surname, password, user_role)
