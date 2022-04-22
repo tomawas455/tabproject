@@ -13,6 +13,7 @@ def get_tags():
     tags = Tag.query.order_by(Tag.id)
     return json.jsonify([tag.to_dict() for tag in tags])
 
+
 @bp.route('/', methods=['POST'])
 @only_worker
 def create_tag():
@@ -28,5 +29,3 @@ def create_tag():
     db.session.add(tag)
     db.session.commit()
     return tag.to_dict()
-
-

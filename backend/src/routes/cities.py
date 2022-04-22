@@ -7,10 +7,12 @@ from access_guards import only_worker
 
 bp = Blueprint('cities', __name__, url_prefix='/cities')
 
+
 @bp.route('/', methods=['GET'])
 def get_cities():
     cities = City.query.order_by(City.id)
     return json.jsonify([city.to_dict() for city in cities])
+
 
 @bp.route('/', methods=['POST'])
 @only_worker
