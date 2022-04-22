@@ -1,6 +1,8 @@
+import traceback
+
 from flask import Flask, json, g, session
 from flask_migrate import Migrate
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import HTTPException, InternalServerError
 
 from models.db import db
 from models.users import User
@@ -17,7 +19,7 @@ migrate = Migrate(app, db)
 
 
 @app.errorhandler(HTTPException)
-def handle_exception(e):
+def handle_http_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     response = e.get_response()
     response.data = json.dumps({
@@ -27,6 +29,14 @@ def handle_exception(e):
     })
     response.content_type = "application/json"
     return response
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    traceback.print_exception(type(e), e, e.__traceback__)
+    return handle_http_exception(
+        InternalServerError("You probably gave me bad data, fix your input!"))
 
 
 @app.before_request
