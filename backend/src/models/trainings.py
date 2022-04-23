@@ -11,7 +11,7 @@ class Meeting(BaseModel):
     training_id = db.Column(db.Integer, db.ForeignKey(
         'trainings.id'), nullable=False)
 
-    _default_fields = ['id', 'begin_date', 'end_date']
+    _default_fields = ['id', 'begin_date', 'end_date', 'training_id']
 
     def __init__(self, begin_date, end_date, training_id):
         self.begin_date = begin_date
