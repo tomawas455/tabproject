@@ -44,9 +44,10 @@ def create_course():
     if not data_json:
         raise BadRequest()
     required_fields = ("name", "description", "expense")
-    if(any(field not in data_json for field in required_fields)):
+    missing_fields = [field for field in required_fields if field not in data_json]
+    if missing_fields:
         raise BadRequest(f"Missing required fields: "
-            f"{', '.join([field for field in required_fields if field not in data_json])}")
+            f"{', '.join(missing_fields)}")
     if not is_correct_string(data_json["name"]):
         raise BadRequest('"name" should be a non-empty string!')
     if not is_correct_string(data_json["description"]):
@@ -82,9 +83,8 @@ def get_course(course_id):
 @bp.route('/', methods=['GET'])
 @only_worker
 def get_courses():
-    courses_page = Course.query\
-        .order_by(Course.id)\
-        .paginate(error_out=False, max_per_page=9999)
+    courses_page = (Course.query.order_by(Course.id)
+                    .paginate(error_out=False, max_per_page=9999))
     return {
         "courses": [course.to_dict() for course in courses_page.items],
         "pages": courses_page.pages,
@@ -126,9 +126,9 @@ def edit_course(course_id):
     if "tags" in data_json:
         if not is_correct_list(data_json["tags"]):
             raise BadRequest('"tags" should be a non-empty list!')
-        tags = db.session.query(Tag).filter(Tag.id.in_(data_json["tags"]))
-        if len([tags]) < len(data_json["tags"]):
-            raise BadRequest(f"Unknown tags: {', '.join(str(id) for id in data_json['tags'] if id not in [tag.id for tag in tags])}")
-        course.tags = list(tags)
+        tags = db.session.query(Tag).filter(Tag.id.in_(data_json["tags"])).all()
+        if len(tags) < len(data_json["tags"]):
+            raise BadRequest(f"Unknown tags: {', '.join(str(id) for id in data_json['tags'] if id not in (tag.id for tag in tags))}")
+        course.tags = tags
     db.session.commit()
     return course.to_dict()
