@@ -6,7 +6,7 @@ from models.courses import Course
 from werkzeug.exceptions import BadRequest
 from models.db import db
 from datetime import datetime
-
+from access_guards import only_user
 
 bp = Blueprint('comments', __name__, url_prefix='/comments')
 
