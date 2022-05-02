@@ -12,6 +12,7 @@ bp = Blueprint('comments', __name__, url_prefix='/comments')
 
 
 @bp.route('/', methods=['POST'])
+@only_user
 def create_comment():
     request_body = request.form
     text = request_body.get('text')
