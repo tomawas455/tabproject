@@ -18,11 +18,11 @@ class Comment(BaseModel):
     course = db.relationship('Course')
 
     _default_fields = ['id', 'text', 'creation_time',
-                       'rate', 'author', 'course_id']
+                       'rate', 'author_id', 'course_id']
 
-    def __init__(self, text, creation_time, rate, author, course):
+    def __init__(self, text, creation_time, rate, author_id, course_id):
         self.text = text
         self.creation_time = creation_time
         self.rate = rate
-        self.author = author
-        self.course = course
+        self.author_id = author_id
+        self.course_id = course_id
