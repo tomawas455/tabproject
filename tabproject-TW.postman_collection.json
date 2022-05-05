@@ -444,6 +444,117 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "create course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"nowy kurs\",\n    \"description\":\"Najlepszy kurs w mieście!\",\n    \"expense\":13.50,\n    \"tags\":[1, 2],\n    \"multimedias\":[1, 2]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/courses/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get course",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/courses/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get courses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/courses?page=1&per_page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "optional, 1 by default"
+						},
+						{
+							"key": "per_page",
+							"value": "1",
+							"description": "optional, 20 by default"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit course",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"nowszy kurs\",\n    \"description\":\"Najlepszy kurs w kraju!\",\n    \"expense\":13.99,\n    \"tags\":[2, 3]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/courses/1/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"1",
+						"edit"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
