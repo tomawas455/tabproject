@@ -1,4 +1,4 @@
-from flask import Blueprint, request, json
+from flask import Blueprint, request, g, json
 from models.trainings import Meeting, Training
 from werkzeug.exceptions import BadRequest, NotFound
 from models.db import db
@@ -92,9 +92,10 @@ def delete_meeting(meeting_id):
     if not meeting:
         raise NotFound('Meeting with this id does not exsist!')
 
-    if 
+    if Training.query.filter_by(id=meeting.training_id, instructor_id=g.user.id).count() == 0:
+        raise BadRequest('You cannot delete meeting if you are not trainer of this!')
 
-    if Participation.filter_by(training_id=meeting_id).count() != 0:
+    if Participation.query.filter_by(training_id=meeting.training_id).count() != 0:
         raise BadRequest('You can not delete meeting with trainees!')
 
     db.session.delete(meeting)
