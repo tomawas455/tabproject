@@ -60,12 +60,12 @@
 					"urlencoded": [
 						{
 							"key": "address",
-							"value": "Poznań",
+							"value": "ul. grzybowa",
 							"type": "text"
 						},
 						{
 							"key": "city_id",
-							"value": "Poznań",
+							"value": "4",
 							"type": "text"
 						}
 					]
