@@ -50,7 +50,7 @@ class Multimedia(BaseModel):
     course_id = db.Column(
         db.Integer, db.ForeignKey('courses.id'), nullable=False)
 
-    _default_fields = ['id', 'filename', 'course_id']
+    _default_fields = ['id', 'filename']
 
     def __init__(self, filename, course_id):
         self.filename = filename
