@@ -171,7 +171,7 @@
 		{
 			"name": "multimedia",
 			"request": {
-				"method": "PATCH",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
@@ -189,7 +189,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/multimedia/4",
+					"raw": "http://localhost:8080/multimedia/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -197,7 +197,7 @@
 					"port": "8080",
 					"path": [
 						"multimedia",
-						"4"
+						"3"
 					]
 				}
 			},
@@ -261,6 +261,30 @@
 					"port": "8080",
 					"path": [
 						"meetings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "meeting",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/meetings/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetings",
+						"1"
 					]
 				}
 			},
