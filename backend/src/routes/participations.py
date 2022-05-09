@@ -1,3 +1,4 @@
+from operator import and_
 from flask import (
     Blueprint, request, session, g
 )
@@ -9,7 +10,6 @@ from werkzeug.exceptions import (
 from datetime import datetime
 
 from access_guards import only_user, only_worker
-from models.courses import Course
 
 from models.db import db
 from models.trainings import Participation, Training
@@ -41,25 +41,25 @@ def create_participants(training_id):
     training = Training.query.filter_by(id=training_id).first()
     if not training:
         raise NotFound("Training with this id does not exist!")
-    data_json = request.get_json()
-    training.participants
     if training.enrolment_begin_date > datetime.today():
         raise BadRequest("You can not enroll on this training yet!")
     if training.enrolment_end_date < datetime.today():
         raise BadRequest("You can not enroll on this training anymore!")
+    data_json = request.get_json()
     if "users" in data_json and type(data_json["users"]) is list:
         if training.free_places_amount < len(data_json["users"]):
             raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
-        participants = []
-        for user_id in data_json["users"]:
-            if Participation.query.filter_by(training_id=training_id, user_id=user_id).first() is not None:
-                raise BadRequest(f"User with id '{user_id}' has already enrolled on this training!")
-            participants.append(Participation(training_id, user_id))
+        already_enrolled = Participation.query.filter(and_(Participation.training_id==training_id,
+                                                        Participation.user_id.in_(data_json["users"]))).all()
+        if already_enrolled:
+            raise BadRequest(f"Users has already enrolled: "
+                f"{', '.join([str(participantion.user_id) for participantion in already_enrolled])}")
+        participants = [Participation(training_id=training_id, user_id=user_id) for user_id in data_json["users"]]
         db.session.add_all(participants)
         training.free_places_amount -= len(participants)
         db.session.commit()
         return {"participants":[participant.to_dict() for participant in participants]}
-    raise BadRequest("Required parameter: 'users' list")
+    raise BadRequest("Required parameter: 'users' list of users' ids")
 
 
 @bp.route('/edit', methods=['PATCH'])
