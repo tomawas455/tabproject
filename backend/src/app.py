@@ -52,7 +52,8 @@ def load_logged_in_user():
 
 def create_app():
     from routes import (
-        auth, users, trainings, courses, tags, places, cities
+        auth, users, trainings, courses, tags,
+        places, cities, multimedia, meetings, comments
     )
     app.register_blueprint(auth.bp)
     app.register_blueprint(users.bp)
@@ -61,6 +62,9 @@ def create_app():
     app.register_blueprint(cities.bp)
     app.register_blueprint(trainings.bp)
     app.register_blueprint(courses.bp)
+    app.register_blueprint(multimedia.bp)
+    app.register_blueprint(meetings.bp)
+    app.register_blueprint(comments.bp)
 
 
 create_app()
