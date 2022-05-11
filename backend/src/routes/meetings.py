@@ -5,14 +5,8 @@ from models.db import db
 from src.utils import datetime_from_json
 from access_guards import only_worker
 from models.trainings import Participation, Training
-import datetime
 
 bp = Blueprint('meetings', __name__, url_prefix='/meetings')
-
-
-def string_to_date(date):
-    result = datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-    return result
 
 
 @bp.route('/', methods=['POST'])
@@ -61,23 +55,16 @@ def edit_meeting(meeting_id):
         raise BadRequest('Nothing to edit..')
 
     try:
-        if not begin_date:
-            begin_date = meeting.begin_date
-        else:
-            begin_date = datetime_from_json(begin_date)
+        if begin_date:
+            meeting.begin_date = datetime_from_json(begin_date)
 
-        if not end_date:
-            end_date = meeting.end_date
-        else:
-            end_date = datetime_from_json(end_date)
+        if end_date:
+            meeting.end_date = datetime_from_json(end_date)
     except:
         raise BadRequest('Invalid format of date. Date must be YYYY-MM-DDTHH:MM:SS.00Z')
 
-    if begin_date > end_date:
+    if meeting.begin_date > meeting.end_date:
         raise BadRequest('Begin date have to be before end date!')
-
-    meeting.begin_date = begin_date
-    meeting.end_date = end_date
 
     db.session.commit()
 

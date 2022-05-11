@@ -16,8 +16,8 @@ def edit_multimedia(course_id):
     request_body = request.form
     filename = request_body.get('filename')
 
-    if not course_id or not filename:
-        raise BadRequest('All parameters should be not an empty string!')
+    if not filename:
+        raise BadRequest('Filename should be not an empty string!')
 
     if Course.query.filter_by(id=course_id).count() == 0:
         raise BadRequest('Course with this id does not exist!')
