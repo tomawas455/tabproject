@@ -11,6 +11,7 @@ setup(
         'Flask==2.1.0',
         'Flask-SQLAlchemy==2.5.1',
         'Flask-Migrate==3.1.0',
+        'Flask-Cors==3.0.10',
         'psycopg2-binary==2.9.3',
         'Werkzeug==2.0.3'
     ]

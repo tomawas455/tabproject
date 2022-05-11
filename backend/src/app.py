@@ -2,6 +2,7 @@ import traceback
 
 from flask import Flask, json, g, session
 from flask_migrate import Migrate
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException, InternalServerError
 
 from models.db import db
@@ -16,6 +17,7 @@ app.config['SECRET_KEY'] = '04105b8b7bcfa615a1d8e1065f08ef1560e0fa10033c6daf84c4
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
+CORS(app)
 
 
 @app.errorhandler(HTTPException)
