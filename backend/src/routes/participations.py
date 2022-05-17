@@ -22,7 +22,7 @@ bp = Blueprint('participations', __name__, url_prefix='/participations')
 def get_participants():
     training_id = request.form.get("training_id")
     training = Training.query.filter_by(id=training_id).first()
-    if(training is None):
+    if training is None:
         raise NotFound("Training with that id does not exist!")
     participations_page = (Participation.query.filter_by(training_id=training_id)
                     .paginate(error_out=False, max_per_page=9999))
@@ -35,9 +35,13 @@ def get_participants():
     }
 
 
-@bp.route('/create/<int:training_id>', methods=['POST'])
+@bp.route('/', methods=['POST'])
 @only_user
-def create_participants(training_id):
+def create_participants():
+    data_json = request.get_json()
+    if "training_id" not in data_json or type(data_json["training_id"]) is not int:
+        raise BadRequest("Required parameter: 'training_id'")
+    training_id = data_json["training_id"]
     training = Training.query.filter_by(id=training_id).first()
     if not training:
         raise NotFound("Training with this id does not exist!")
@@ -45,7 +49,6 @@ def create_participants(training_id):
         raise BadRequest("You can not enroll on this training yet!")
     if training.enrolment_end_date < datetime.today():
         raise BadRequest("You can not enroll on this training anymore!")
-    data_json = request.get_json()
     if "users" in data_json and type(data_json["users"]) is list:
         if training.free_places_amount < len(data_json["users"]):
             raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
@@ -62,7 +65,7 @@ def create_participants(training_id):
     raise BadRequest("Required parameter: 'users' list of users' ids")
 
 
-@bp.route('/edit', methods=['PATCH'])
+@bp.route('/', methods=['PATCH'])
 @only_worker
 def edit_participation():
     data_json = request.get_json()
