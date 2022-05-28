@@ -1,15 +1,5 @@
 version: "3.9"
 services:
-  frontend:
-    container_name: frontend
-    depends_on:
-      - backend
-    build: ./frontend
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "3000:3000"
   backend:
     container_name: backend
     depends_on:
