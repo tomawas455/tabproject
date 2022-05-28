@@ -1,15 +1,53 @@
 {
 	"info": {
-		"_postman_id": "4150093e-b79b-41ba-a965-49e2ddfa540e",
-		"name": "tabproject-TW",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "749c8382-22db-4dee-8400-9c1e99d1741d",
+		"name": "tabproject-TW Copy 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12966224"
 	},
 	"item": [
 		{
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "user1@user.mail",
+									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "all accounts have password 12345678",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -19,6 +57,43 @@
 								{
 									"key": "email",
 									"value": "admin@istrat.or",
+									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "all accounts have password 12345678",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Worker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "worker1@worker.main",
 									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
 									"type": "default"
 								},
@@ -229,7 +304,7 @@
 							"query": [
 								{
 									"key": "",
-									"value": null,
+									"value": "",
 									"description": "that 1 in url is training id"
 								}
 							]
@@ -268,32 +343,32 @@
 							"query": [
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "all body fields are optional"
 								},
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "tags - ids of tags to be found"
 								},
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "cities - ids of cities training should take place in"
 								},
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "name - full or part of name of training's (course) name"
 								},
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "page, per_page - page and items on page, defaults to 1 and 20"
 								},
 								{
 									"key": null,
-									"value": null,
+									"value": "",
 									"description": "and that ?&&&&& in url can and should be removed, it's there because of these notes"
 								}
 							]
@@ -666,6 +741,403 @@
 							"path": [
 								"participations",
 								"edit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cities",
+			"item": [
+				{
+					"name": "cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "city",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "city",
+									"value": "Gliwice",
+									"description": "Nazwa miasta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meetings",
+			"item": [
+				{
+					"name": "meeting",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "begin_date",
+									"value": "2022-03-12T11:50:00.00Z",
+									"description": "YYYY-MM-DDTHH:MM:00.00Z",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-03-12T13:50:00.00Z",
+									"description": "YYYY-MM-DDTHH:MM:00.00Z",
+									"type": "text"
+								},
+								{
+									"key": "training_id",
+									"value": "6",
+									"description": "id treningu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/meetings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meetings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "meeting",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/meetings/26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meetings",
+								"26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "meeting",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "begin_date",
+									"value": "2022-03-16T11:50:00.00Z",
+									"description": "YYYY-MM-DDTHH:MM:00.00Z",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-03-17T13:50:00.00Z",
+									"description": "YYYY-MM-DDTHH:MM:00.00Z",
+									"type": "text"
+								},
+								{
+									"key": "training_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/meetings/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meetings",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "text",
+									"value": "super kursik 10/10",
+									"type": "text"
+								},
+								{
+									"key": "rate",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/comments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"comments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Places",
+			"item": [
+				{
+					"name": "places",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/places",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"places"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "place",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "address",
+									"value": "ul. grzybowa",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/places",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"places"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Multimedia",
+			"item": [
+				{
+					"name": "multimedia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "filename",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "course_id",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/multimedia/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"multimedia",
+								"3"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": null,
+									"description": "id in path is a course_id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multimedia",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/multimedia/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"multimedia",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "tags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "nowy tag",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tags"
 							]
 						}
 					},
