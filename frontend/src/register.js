@@ -1,4 +1,5 @@
 import React ,{useState} from 'react'
+import Header from './Header';
 
 function Register()
 {
@@ -26,6 +27,8 @@ function Register()
     }
 
     return (
+            <div >
+            <Header />
             <div className="col-sm-4 offset-sm-4">
             <h1> Register Page </h1>
             <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" placeholder="email"/>
@@ -37,6 +40,7 @@ function Register()
             <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="form-control" placeholder="password"/>
             <br />
             <button onClick={signUp} className="btn btn-primary"> Sign Up </button>
+            </div>
             </div>
 )
 }
