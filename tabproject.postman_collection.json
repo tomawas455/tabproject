@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "749c8382-22db-4dee-8400-9c1e99d1741d",
+		"_postman_id": "1b828487-c2d8-4932-aa6b-4c0e3f9ef13f",
 		"name": "tabproject-TW Copy 2",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12966224"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -291,7 +290,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/trainings/1?",
+							"raw": "http://localhost:8080/trainings/1?=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -330,7 +329,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/trainings/?&&&&&",
+							"raw": "http://localhost:8080/trainings/?=&=&=&=&=&=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -694,7 +693,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"users\":[\n        1,\n        2,\n        3\n    ]\n}",
+							"raw": "{\n    \"training_id\": 1,\n    \"users_to_register\":[\n        {\n            \"email\": \"jakis@email.com\",\n            \"name\": \"andrzej\",\n            \"surname\": \"stefanowicz\",\n            \"password\": \"lubiepizzezananasem123\"\n        },\n        {\n            \"email\": \"kolejny@email.com\",\n            \"name\": \"stefan\",\n            \"surname\": \"andrzejewicz\",\n            \"password\": \"321ewhawajska\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"

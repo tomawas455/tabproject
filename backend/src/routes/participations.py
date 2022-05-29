@@ -52,16 +52,18 @@ def create_participants():
         raise BadRequest("You can not enroll on this training anymore!")
     if "users_to_register" not in data_json or type(data_json["users_to_register"]) is not list:
         raise BadRequest("Required parameter: 'users_to_register' list of emails and passwords")
-    if training.free_places_amount < len(data_json["users_to_register"] + 1):
+    if training.free_places_amount < len(data_json["users_to_register"]) + 1:
         raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
     already_enrolled = Participation.query.filter(and_(Participation.training_id==training_id,
                                                     Participation.user_id==g.user.id)).first()
     if already_enrolled:
         raise BadRequest(f"User has already enrolled")
-    users_to_enroll_ids = [g.user.id]
+    users_to_enroll = [g.user]
     for user in data_json["users_to_register"]:
-        users_to_enroll_ids.append(register_user(user["email"], user["name"], user["surname"], user["password"]).id)
-    participants = [Participation(training_id=training_id, user_id=user_id) for user_id in users_to_enroll_ids]
+        added_user = register_user(user["email"], user["name"], user["surname"], user["password"])
+        users_to_enroll.append(added_user)
+    db.session.commit()
+    participants = [Participation(training_id=training_id, user_id=user.id) for user in users_to_enroll]
     db.session.add_all(participants)
     training.free_places_amount -= len(participants)
     db.session.commit()
