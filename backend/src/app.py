@@ -18,7 +18,7 @@ app.config['SESSION_COOKIE_HTTPONLY'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
-CORS(app)
+CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
 
 @app.errorhandler(HTTPException)
