@@ -10,6 +10,7 @@ from werkzeug.exceptions import (
 from datetime import datetime
 
 from access_guards import only_user, only_worker
+from register_user import register_user
 
 from models.db import db
 from models.trainings import Participation, Training
@@ -49,20 +50,22 @@ def create_participants():
         raise BadRequest("You can not enroll on this training yet!")
     if training.enrolment_end_date < datetime.today():
         raise BadRequest("You can not enroll on this training anymore!")
-    if "users" in data_json and type(data_json["users"]) is list:
-        if training.free_places_amount < len(data_json["users"]):
-            raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
-        already_enrolled = Participation.query.filter(and_(Participation.training_id==training_id,
-                                                        Participation.user_id.in_(data_json["users"]))).all()
-        if already_enrolled:
-            raise BadRequest(f"Users has already enrolled: "
-                f"{', '.join([str(participantion.user_id) for participantion in already_enrolled])}")
-        participants = [Participation(training_id=training_id, user_id=user_id) for user_id in data_json["users"]]
-        db.session.add_all(participants)
-        training.free_places_amount -= len(participants)
-        db.session.commit()
-        return {"participants":[participant.to_dict() for participant in participants]}
-    raise BadRequest("Required parameter: 'users' list of users' ids")
+    if "users_to_register" not in data_json or type(data_json["users_to_register"]) is not list:
+        raise BadRequest("Required parameter: 'users_to_register' list of emails and passwords")
+    if training.free_places_amount < len(data_json["users_to_register"] + 1):
+        raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
+    already_enrolled = Participation.query.filter(and_(Participation.training_id==training_id,
+                                                    Participation.user_id==g.user.id)).first()
+    if already_enrolled:
+        raise BadRequest(f"User has already enrolled")
+    users_to_enroll_ids = [g.user.id]
+    for user in data_json["users_to_register"]:
+        users_to_enroll_ids.append(register_user(user["email"], user["name"], user["surname"], user["password"]).id)
+    participants = [Participation(training_id=training_id, user_id=user_id) for user_id in users_to_enroll_ids]
+    db.session.add_all(participants)
+    training.free_places_amount -= len(participants)
+    db.session.commit()
+    return {"participants":[participant.to_dict() for participant in participants]}
 
 
 @bp.route('/', methods=['PATCH'])
