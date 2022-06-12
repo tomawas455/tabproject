@@ -21,6 +21,9 @@
     `localhost:5000` - backend<br/>
     `localhost:2137` - baza danych
 
+6. troubleshooting
+    jeśli na windowsie nie chce ruszyć - `git config --global core.autocrlf input`, sklonować repozytorium, `git config --global core.autocrlf false` (albo jak wartość była wcześniej, domyślna to `false`)
+
 # Nieprzyjemna droga - bare metal
 1. zainstalować pythona, node/npm i postgresql<br/>
     [link](https://www.python.org/downloads/)<br/>
