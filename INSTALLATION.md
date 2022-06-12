@@ -26,9 +26,9 @@
 
 # Nieprzyjemna droga - bare metal
 1. zainstalować pythona, node/npm i postgresql<br/>
-    [link](https://www.python.org/downloads/)<br/>
-    [link](https://nodejs.org/en/)<br/>
-    [link](https://www.postgresql.org/download/)
+    [python](https://www.python.org/downloads/)<br/>
+    [node](https://nodejs.org/en/)<br/>
+    [postgresql](https://www.postgresql.org/download/)
 
 2. skonfigurować postgresql<br/>
     tak, żeby był user `postgres` z hasłem `postgres` (domyślne);<br/>

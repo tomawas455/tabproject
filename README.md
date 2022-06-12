@@ -1,4 +1,5 @@
 # TAB projekt
 ## RB2 - sklep z kursami
 
-[installation guide](INSTALLATION.md)
+[instalacja](INSTALLATION.md)
+[sposób łączenia z BD](DB_CONNECTIVITY.md)
