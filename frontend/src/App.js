@@ -11,6 +11,7 @@ import UpdateProduct from "./UpdateProduct";
 import GetUsers from "./GetUsers";
 import TrainingList from "./trainingList";
 import CreateTraining from "./createTraining";
+import MoreInfoAboutTraining from "./moreInfoAboutTraining";
 
 
 function App() {
@@ -41,6 +42,11 @@ function App() {
             exact
             path="updateProduct/:id"
             element={<Protected Cmp={UpdateProduct} />}
+          />
+          <Route
+              exact
+              path="/moreInfoAboutTraining/:id"
+              element={<Protected Cmp={MoreInfoAboutTraining} />}
           />
           <Route
             exact

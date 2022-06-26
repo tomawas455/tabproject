@@ -26,29 +26,52 @@ function CreateTraining(props) {
     const [enrolmentEndDate, setEnrolmentEndDate]= useState([]);
     const [place, setPlace]= useState([]);
     const [instructor, setInstructor]= useState([]);
-//TODO
+
     useEffect(() => {
-        async function fetchData() {
-            let result = await fetch("http://localhost:8080/places", {
-                credentials: "include",
-                method: "GET",
-            });
-            result = await result.json();
-            setData(result);
-        }
-        fetchData();
+
+        cities();
+        getUserData();
+
     }, []);
+
+    async function cities() {
+        let result = await fetch("http://localhost:8080/places", {
+            credentials: "include",
+            method: "GET",
+        });
+        result = await result.json();
+        setData(result);
+    }
+
+    async function getUserData() {
+        let result = await fetch("http://localhost:8080/users/role/2", {
+            credentials: "include",
+            method: "GET",
+        });
+        result = await result.json();
+        setUserData(result);
+    }
+
 
     async function addCourse() {
 
-        let result = await fetch("http://localhost:8080/courses/create", {
+        let result = await fetch("http://localhost:8080/trainings", {
             method: "POST",
             credentials: "include",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                 Accept: "application/json",
             },
-            body: JSON.stringify({
+            body: new URLSearchParams({
+                price: price,
+                places_amount: placesAmount,
+                begin_date: beginDate,
+                end_date: endDate,
+                enrolment_begin_date: enrolmentBeginDate,
+                enrolment_end_date: enrolmentEndDate,
+                course_id: props.router.params.id,
+                place_id: place,
+                instructor_id: instructor,
             }),
         });
         result = await result.json();
@@ -56,8 +79,6 @@ function CreateTraining(props) {
 
     }
 
-    console.warn(props);
-    console.warn(data);
 
 
     return (
@@ -113,6 +134,16 @@ function CreateTraining(props) {
                     <option/>
                     {data.map((item) => (
                         <option value={item.id}> {item.address}, {item.city.city} </option>
+                    ))}
+                </select>
+                <br />
+                <br />
+                <h3>Choose instructor for training</h3>
+                <br />
+                <select style={{width:300}} value={instructor} onChange={(e) => setInstructor([e.target.value])}>
+                    <option/>
+                    {userData.map((item) => (
+                        <option value={item.id}> {item.name} </option>
                     ))}
                 </select>
                 <br />

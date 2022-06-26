@@ -27,6 +27,21 @@
   cursor: pointer;
 }
 
+.moreInfo {
+  background-color: darkorange;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.border {
+  background-color: whitesmoke;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
