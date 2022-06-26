@@ -26,7 +26,7 @@ def get_participants():
     if training is None:
         raise NotFound("Training with that id does not exist!")
     participations_page = (Participation.query.filter_by(training_id=training_id)
-                    .paginate(error_out=False, max_per_page=9999))
+                           .paginate(error_out=False, max_per_page=9999))
     return {
         "participants": [participant.to_dict() for participant in participations_page.items],
         "pages": participations_page.pages,
@@ -51,23 +51,34 @@ def create_participants():
     if training.enrolment_end_date < datetime.today():
         raise BadRequest("You can not enroll on this training anymore!")
     if "users_to_register" not in data_json or type(data_json["users_to_register"]) is not list:
-        raise BadRequest("Required parameter: 'users_to_register' list of emails and passwords")
+        raise BadRequest(
+            "Required parameter: 'users_to_register' list of emails and passwords")
     if training.free_places_amount < len(data_json["users_to_register"]) + 1:
-        raise BadRequest(f"There are not enough free places! Free places: {training.free_places_amount}")
-    already_enrolled = Participation.query.filter(and_(Participation.training_id==training_id,
-                                                    Participation.user_id==g.user.id)).first()
+        raise BadRequest(
+            f"There are not enough free places! Free places: {training.free_places_amount}")
+    already_enrolled = Participation.query.filter(and_(Participation.training_id == training_id,
+                                                       Participation.user_id == g.user.id)).first()
     if already_enrolled:
         raise BadRequest(f"User has already enrolled")
     users_to_enroll = [g.user]
     for user in data_json["users_to_register"]:
-        added_user = register_user(user["email"], user["name"], user["surname"], user["password"])
+        added_user = register_user(
+            user["email"], user["name"], user["surname"], user["password"])
         users_to_enroll.append(added_user)
     db.session.commit()
-    participants = [Participation(training_id=training_id, user_id=user.id, payer_id=g.user.id) for user in users_to_enroll]
+    participants = [
+        Participation(
+            training_id=training_id,
+            user_id=user.id,
+            payer_id=g.user.id
+        ) for user in users_to_enroll
+    ]
     db.session.add_all(participants)
     training.free_places_amount -= len(participants)
     db.session.commit()
-    return {"participants":[participant.to_dict() for participant in participants]}
+    return {
+        "participants": [participant.to_dict() for participant in participants]
+    }
 
 
 @bp.route('/', methods=['PATCH'])
@@ -76,9 +87,11 @@ def edit_participation():
     data_json = request.get_json()
     if any(parameter not in data_json for parameter in ("user_id", "training_id", "passed")):
         raise BadRequest("Required parameters: user_id, training_id")
-    participation = Participation.query.filter_by(user_id=data_json["user_id"], training_id=data_json["training_id"]).first()
+    participation = Participation.query.filter_by(
+        user_id=data_json["user_id"], training_id=data_json["training_id"]).first()
     if participation is None:
-        raise NotFound("Participation with this user id and training id does not exist!")
+        raise NotFound(
+            "Participation with this user id and training id does not exist!")
     participation.passed = data_json["passed"]
     db.session.commit()
     return participation.to_dict()

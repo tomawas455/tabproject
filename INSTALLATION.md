@@ -31,42 +31,35 @@
     [postgresql](https://www.postgresql.org/download/)
 
 2. skonfigurować postgresql<br/>
-    tak, żeby był user `postgres` z hasłem `postgres` (domyślne);<br/>
-    istniała baza `tabproject` (`psql` -> `CREATE DATABASE tabproject;`);<br/>
-    i postgres chodził/udostępniał dostęp na porcie `5432` (domyślny)<br/>
-    [dokumentacja konfiguracji](https://www.postgresql.org/docs/13/runtime-config.html)
+    tak żeby istniała baza doi projektu (np. `psql` -> `CREATE DATABASE tabproject;`);<br/>
+    i postgres był uruchomiony<br/>
 
-3. ustawić hostname dla bazy<br/>
-    backend łączy się z bazą poprzez `postgresql://login:haslo@db:5432/tabproject`<br/>
-    `db` jest nazwą hosta do połaczenia. W związku z tym system musi kierować nazwę `db` na adres bazy danych.<br/>
-    W przypadku bazy uruchomionej na tym samym komputerze oznacza to dodanie wpisu `localhost db` albo `127.0.0.1 db` w pliku:<br/>
-    windows - `C:\Windows\System32\drivers\etc\hosts`<br/>
-    linux - `/etc/hosts`
-
-4. sklonować repozytorium<br/>
+3. sklonować repozytorium<br/>
     `git clone https://github.com/tomawas455/tabproject.git`
 
-5. przejść do folderu z projektem<br/>
+4. przejść do folderu z projektem<br/>
     `cd tabproject`
 
-6. (opcjonalne) stworzyć wirtualne środowisko dla pythona<br/>
+5. (opcjonalne) stworzyć wirtualne środowisko dla pythona<br/>
     dzięki temu projekt nie będzie zainstalowany w systemie - nie będzie zaśmiecał systemu.<br/>
     `python -m venv ../venv`<br/>
     `../venv` jest ścieżką dla środowiska, może być inna.<br/>
     w kolejnych krokach w przypadku komendy `pip`, `python` czy `flask` trzeba pisać `../venv/bin/pip`, `..venv/bin/python` i `../venv/bin/flask`.
 
-7. zainstalować zależności backendowe<br/>
+6. zainstalować zależności backendowe<br/>
     `pip install -e .`
 
-8. skonfigurować środowisko<br/>
-    stworzyć zmienną środowiskową `FLASK_APP=src/app.py` lub `FLASK_APP=full/tabproject/path/tabproject/backend/src/app.py` oraz `FLASK_ENV=production`
-
-9. odpalić postgres<br/>
+7. skonfigurować środowisko<br/>
+    stworzyć zmienną środowiskową `FLASK_APP=src/app.py` lub `FLASK_APP=full/tabproject/path/tabproject/backend/src/app.py` oraz `FLASK_ENV=production`.<br/>
+    ustawić zmienne środowiskowe `TAB_DB_URL` oraz `TAB_SECRET_KEY`.<br/>
+    pierwsza powinna zawierać url do połączenia z bazą danych, a druga secret key dla aplikacji.
+    
+8. odpalić postgres<br/>
     windows - wejść do folderu z zainstalowanym postgresem i uruchomić `pg_cli start`<br/>
     linux - prawdopodobnie sam się uruchomił po instalacji, jeśli nie - `systemctl start postgres`
 
-10. odpalić backend<br/>
+9. odpalić backend<br/>
     `cd backend` i `flask run`
 
-11. odpalić frontend<br/>
+10. odpalić frontend<br/>
     otworzyć drugie okno lini komend, wejść do folderu `tabproject/frontend` i uruchomić `npm start`

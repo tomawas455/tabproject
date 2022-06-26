@@ -1,6 +1,6 @@
 1. Backend instaluje dodatkową wtyczkę do `flask` integrującą `SQLAlchemy` z `flask`iem
 
-2. W konfiguracji aplikacji (`src/app.py`) trzeba podać dane dostępowe do bazy (tj. postrges LDAP url)
+2. przed uruchomieniem aplikacji trzeba ustawić zmienną środowiskową `TAB_DB_URL` zawierający url do połączenia z bazą (tj. postrges LDAP url)
 
 3. W trakcie pracy aplikacji `flask-sqlalchemy` zarządza połączeniami do bazy danych
 

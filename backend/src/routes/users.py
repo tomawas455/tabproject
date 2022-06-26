@@ -1,6 +1,5 @@
-import json
 from flask import (
-    Blueprint, request, g
+    Blueprint, request, g, json
 )
 from werkzeug.exceptions import NotFound
 
@@ -18,11 +17,11 @@ def get_current_user():
     return g.user.to_dict()
 
 
-@bp.route('/role/<int:role_id>', methods=['GET'])
+@bp.route('/workers')
 @only_worker
-def get_users_by_role(role_id):
-    users = User.query.filter_by(role_id=role_id)
-    return json.jsonify([user.to_dict() for user in users])
+def get_workers():
+    workers = User.query.join(User.role).filter(Role.name == 'worker')
+    return json.jsonify([worker.to_dict() for worker in workers])
 
 
 @bp.route('/')

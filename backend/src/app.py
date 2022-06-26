@@ -1,4 +1,5 @@
 import traceback
+from os import environ
 
 from flask import Flask, json, g, session
 from flask_migrate import Migrate
@@ -10,10 +11,8 @@ from models.users import User
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    "postgresql://postgres:postgres@db:5432/tabproject"
-)
-app.config['SECRET_KEY'] = '04105b8b7bcfa615a1d8e1065f08ef1560e0fa10033c6daf84c44174fa5f07e1f8a641e0b9887f48f0f8faeea21f1f817ee8b9d26def88854eeed8bb9050c7ca'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("TAB_DB_URL")
+app.config['SECRET_KEY'] = environ.get("TAB_SECRET_KEY")
 app.config['SESSION_COOKIE_HTTPONLY'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
