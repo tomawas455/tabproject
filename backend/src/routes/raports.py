@@ -26,7 +26,9 @@ def get_worker_raport():
         filters.append((Training.author_id.in_(data_json["authors"])))
     if "instructors" in data_json:
         filters.append((Training.instructor_id.in_(data_json["instructors"])))
-    trainings_page = db.session.query(Training).filter(*filters).paginate(error_out=False, max_per_page=9999)
+    trainings_page = db.session.query(Training) \
+                                .filter(*filters) \
+                                .paginate(error_out=False, max_per_page=9999)
     return {
         "trainings": [training.to_dict() for training in trainings_page.items],
         "items": len(trainings_page.items),
