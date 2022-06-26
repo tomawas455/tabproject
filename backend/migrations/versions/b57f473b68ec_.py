@@ -79,9 +79,11 @@ def upgrade():
     op.create_table('participations',
     sa.Column('training_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('payer_id', sa.Integer(), nullable=False),
     sa.Column('passed', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['training_id'], ['trainings.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['payer_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('training_id', 'user_id')
     )
     # ### end Alembic commands ###

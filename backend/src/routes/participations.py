@@ -63,7 +63,7 @@ def create_participants():
         added_user = register_user(user["email"], user["name"], user["surname"], user["password"])
         users_to_enroll.append(added_user)
     db.session.commit()
-    participants = [Participation(training_id=training_id, user_id=user.id) for user in users_to_enroll]
+    participants = [Participation(training_id=training_id, user_id=user.id, payer_id=g.user.id) for user in users_to_enroll]
     db.session.add_all(participants)
     training.free_places_amount -= len(participants)
     db.session.commit()

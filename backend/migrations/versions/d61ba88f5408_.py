@@ -59,14 +59,14 @@ def upgrade():
 
     op.execute(
         """ INSERT INTO participations
-        (training_id, user_id, passed) VALUES
-        ('1', (SELECT id FROM users WHERE email='user2@user.mail'), 'yes'),
-        ('1', (SELECT id FROM users WHERE email='user1@user.mail'), 'no'),
-        ('2', (SELECT id FROM users WHERE email='worker2@worker.mail'), 'yes'),
-        ('3', (SELECT id FROM users WHERE email='worker1@worker.mail'), NULL),
-        ('4', (SELECT id FROM users WHERE email='user1@user.mail'), NULL),
-        ('5', (SELECT id FROM users WHERE email='admin@istrat.or'), 'no'),
-        ('5', (SELECT id FROM users WHERE email='krzysztof@jaworek.mail'), 'yes')
+        (training_id, user_id, payer_id, passed) VALUES
+        ('1', (SELECT id FROM users WHERE email='user2@user.mail'), (SELECT id FROM users WHERE email='user2@user.mail'), 'yes'),
+        ('1', (SELECT id FROM users WHERE email='user1@user.mail'), (SELECT id FROM users WHERE email='user1@user.mail'), 'no'),
+        ('2', (SELECT id FROM users WHERE email='worker2@worker.mail'), (SELECT id FROM users WHERE email='worker2@worker.mail'), 'yes'),
+        ('3', (SELECT id FROM users WHERE email='worker1@worker.mail'), (SELECT id FROM users WHERE email='worker1@worker.mail'), NULL),
+        ('4', (SELECT id FROM users WHERE email='user1@user.mail'), (SELECT id FROM users WHERE email='user1@user.mail'), NULL),
+        ('5', (SELECT id FROM users WHERE email='admin@istrat.or'), (SELECT id FROM users WHERE email='admin@istrat.or'), 'no'),
+        ('5', (SELECT id FROM users WHERE email='krzysztof@jaworek.mail'), (SELECT id FROM users WHERE email='krzysztof@jaworek.mail'), 'yes')
         """
     )
 

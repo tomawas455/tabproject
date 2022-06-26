@@ -26,15 +26,20 @@ class Participation(BaseModel):
         'trainings.id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.id'), primary_key=True)
-    user = db.relationship('User')
+    user = db.relationship('User', foreign_keys=[user_id])
+
+    payer_id = db.Column(db.Integer, db.ForeignKey(
+        'users.id'), primary_key=False)
+    payer = db.relationship('User', foreign_keys=[payer_id])
 
     passed = db.Column(db.Boolean)
 
-    _default_fields = ['id', 'user', 'passed']
+    _default_fields = ['id', 'user', 'passed', 'payer']
 
-    def __init__(self, training_id, user_id):
+    def __init__(self, training_id, user_id, payer_id):
         self.training_id = training_id
         self.user_id = user_id
+        self.payer_id = payer_id
 
 
 class Training(BaseModel):
