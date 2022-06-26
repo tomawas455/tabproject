@@ -24,7 +24,7 @@ class Course(BaseModel):
     tags = db.relationship('Tag', secondary=course_tags_M2M, lazy='subquery')
 
     _default_fields = ['id', 'name', 'description',
-                       'author', 'multimedias', 'tags']
+                       'author', 'multimedias', 'tags', 'expense']
 
     def __init__(self, name, description, expense, author):
         self.name = name
