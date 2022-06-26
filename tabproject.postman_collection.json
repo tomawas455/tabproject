@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "1b828487-c2d8-4932-aa6b-4c0e3f9ef13f",
-		"name": "tabproject-TW Copy 2",
+		"_postman_id": "982b7b47-c94b-4173-a8d7-1768ba1eee9b",
+		"name": "tabproject",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,7 @@
 								{
 									"key": "email",
 									"value": "user1@user.mail",
-									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
+									"description": "user1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
 									"type": "default"
 								},
 								{
@@ -56,7 +56,7 @@
 								{
 									"key": "email",
 									"value": "admin@istrat.or",
-									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
+									"description": "admin@istrat.or",
 									"type": "default"
 								},
 								{
@@ -92,8 +92,8 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "worker1@worker.main",
-									"description": "admin@istrat.or\nworker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail\nuser1@user.mail\nuser2@user.mail\nuser3@user.mail\nuser4@user.mail\nuser5@user.mail\nuser6@user.mail\nuser7@user.mail\nuser8@user.mail\nuser9@user.mail\nuser10@user.mail\nkrzysztof@jaworek.mail",
+									"value": "worker1@worker.mail",
+									"description": "worker1@worker.mail\nworker2@worker.mail\nworker3@worker.mail\nworker4@worker.mail\nworker5@worker.mail",
 									"type": "default"
 								},
 								{
@@ -274,6 +274,26 @@
 								"users",
 								"4",
 								"change_role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all workers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/workers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"workers"
 							]
 						}
 					},
@@ -701,7 +721,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/participations/create/1",
+							"raw": "http://localhost:8080/participations/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -709,8 +729,7 @@
 							"port": "8080",
 							"path": [
 								"participations",
-								"create",
-								"1"
+								""
 							]
 						}
 					},
@@ -731,7 +750,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/participations/edit",
+							"raw": "http://localhost:8080/participations/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -739,7 +758,7 @@
 							"port": "8080",
 							"path": [
 								"participations",
-								"edit"
+								""
 							]
 						}
 					},
