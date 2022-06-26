@@ -1,9 +1,10 @@
+import json
 from flask import (
     Blueprint, request, g
 )
 from werkzeug.exceptions import NotFound
 
-from access_guards import only_admin, login_required
+from access_guards import only_admin, login_required, only_worker
 
 from models.db import db
 from models.users import User, Role
@@ -15,6 +16,13 @@ bp = Blueprint('users', __name__, url_prefix='/users')
 @login_required
 def get_current_user():
     return g.user.to_dict()
+
+
+@bp.route('/role/<int:role_id>', methods=['GET'])
+@only_worker
+def get_users_by_role(role_id):
+    users = User.query.filter_by(role_id=role_id)
+    return json.jsonify([user.to_dict() for user in users])
 
 
 @bp.route('/')
