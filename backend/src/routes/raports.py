@@ -18,13 +18,13 @@ def get_worker_raport():
         filters.append((Training.begin_date >= data_json["from_date"]))
     if "to_date" in data_json:
         filters.append((Training.begin_date <= data_json["to_date"]))
-    if "courses" in data_json:
+    if "courses" in data_json and data_json["courses"]:
         filters.append((Training.course_id.in_(data_json["courses"])))
-    if "trainings" in data_json:
+    if "trainings" in data_json and data_json["trainings"]:
         filters.append((Training.course_id.in_(data_json["trainings"])))
-    if "authors" in data_json:
+    if "authors" in data_json and data_json["authors"]:
         filters.append((Training.author_id.in_(data_json["authors"])))
-    if "instructors" in data_json:
+    if "instructors" in data_json and data_json["instructors"]:
         filters.append((Training.instructor_id.in_(data_json["instructors"])))
     trainings_page = db.session.query(Training) \
                                 .filter(*filters) \
