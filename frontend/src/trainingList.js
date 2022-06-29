@@ -66,8 +66,11 @@ function TrainingList() {
               <td> {item.place.city.city} </td>
               <td> {item.places_amount} </td>
               <td>
-                <Link to={"/moreInfoAboutTraining/" + item.id}>
-                  <span className="moreInfo">More info!</span>
+                <Link
+                  to={"/moreInfoAboutTraining/" + item.id}
+                  className={"link"}
+                >
+                  <span className="button">More info!</span>
                 </Link>
               </td>
             </tr>

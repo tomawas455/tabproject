@@ -13,8 +13,6 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 
-
-
 function UpdateProduct(props) {
   const [data, setData] = useState([]);
   const [name, setName] = useState([]);
@@ -27,19 +25,17 @@ function UpdateProduct(props) {
   }, [props]);
 
   async function updateProduct(id) {
-    let result = await fetch("http://localhost:8080/courses/" + id + "/edit", {
+    let item = { name, description };
+    console.warn("item", item);
+    await fetch("http://localhost:8080/courses/" + id + "/edit", {
       method: "PATCH",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({
-        name: name,
-        description: description,
-      }),
+      body: JSON.stringify(item),
     });
-    result = await result.json();
   }
 
   async function getData() {
@@ -52,11 +48,7 @@ function UpdateProduct(props) {
     );
     result = await result.json();
     setData(result);
-
   }
-
-
-
 
   return (
     <div>
@@ -65,7 +57,7 @@ function UpdateProduct(props) {
         <h1> Name:</h1>
         <input
           type="text"
-          defaultValue={data.name}
+          value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -74,7 +66,7 @@ function UpdateProduct(props) {
         <h1> Description:</h1>
         <input
           type="text"
-          defaultValue={data.description}
+          value={description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
@@ -84,11 +76,8 @@ function UpdateProduct(props) {
         {data.tags?.map((allTags) => (
           <h2> {allTags.name}</h2>
         ))}
-        <button
-          onClick={() => updateProduct(data.id)}
-          className={"btn btn-primary"}
-        >
-          Update Product
+        <button onClick={() => updateProduct(data.id)} className={"button"}>
+          <span>Update Product</span>
         </button>
       </div>
     </div>

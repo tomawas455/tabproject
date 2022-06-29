@@ -78,10 +78,9 @@ function GetUsers() {
                   </select>
                   <button
                     onClick={() => updateRole(item.id)}
-                    className="btn btn-primary"
+                    className="button"
                   >
-                    {" "}
-                    Change Role{" "}
+                    <span> Change Role </span>
                   </button>
                 </td>
               </tr>

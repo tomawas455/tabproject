@@ -51,9 +51,8 @@ function Login() {
           placeholder="password"
         />
         <br />
-        <button onClick={login} className="btn btn-primary">
-          {" "}
-          Login{" "}
+        <button onClick={login} className="button">
+          <span> Login </span>
         </button>
       </div>
     </div>

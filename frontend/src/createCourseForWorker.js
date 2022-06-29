@@ -44,7 +44,6 @@ function CreateCourseForWorker() {
     });
     result = await result.json();
     console.log("result", items);
-
   }
 
   return (
@@ -91,8 +90,8 @@ function CreateCourseForWorker() {
           placeholder="multimedias, as URL"
         />
         <br />
-        <button onClick={addCourse} className="btn btn-primary">
-          Add course
+        <button onClick={addCourse} className="button">
+          <span>Add course</span>
         </button>
       </div>
     </div>

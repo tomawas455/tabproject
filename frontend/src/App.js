@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -12,7 +11,8 @@ import GetUsers from "./GetUsers";
 import TrainingList from "./trainingList";
 import CreateTraining from "./createTraining";
 import MoreInfoAboutTraining from "./moreInfoAboutTraining";
-
+import ParticipationForm from "./participationForm";
+import UpdateTraining from "./UpdateTraining";
 
 function App() {
   return (
@@ -28,9 +28,9 @@ function App() {
             element={<Protected Cmp={CreateCourseForWorker} />}
           />
           <Route
-              exact
-              path="/createTraining/:id"
-              element={<Protected Cmp={CreateTraining} />}
+            exact
+            path="/createTraining/:id"
+            element={<Protected Cmp={CreateTraining} />}
           />
           <Route exact path="/" element={<Protected Cmp={CourseList} />} />
           <Route
@@ -44,9 +44,19 @@ function App() {
             element={<Protected Cmp={UpdateProduct} />}
           />
           <Route
-              exact
-              path="/moreInfoAboutTraining/:id"
-              element={<Protected Cmp={MoreInfoAboutTraining} />}
+            exact
+            path="updateTraining/:id"
+            element={<Protected Cmp={UpdateTraining} />}
+          />
+          <Route
+            exact
+            path="participationForm/:id"
+            element={<Protected Cmp={ParticipationForm} />}
+          />
+          <Route
+            exact
+            path="/moreInfoAboutTraining/:id"
+            element={<Protected Cmp={MoreInfoAboutTraining} />}
           />
           <Route
             exact

@@ -10,6 +10,7 @@ function Protected(props) {
     if (!localStorage.getItem("user-info")) {
       navigate("/login");
     }
+    console.warn(localStorage);
   }, []);
 
   return (

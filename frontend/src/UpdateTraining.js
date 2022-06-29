@@ -13,9 +13,10 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 
-function CreateTraining(props) {
+function UpdateTraining(props) {
   const [userData, setUserData] = useState([]);
   const [data, setData] = useState([]);
+  const [trainigData, setTrainingData] = useState([]);
   const [price, setPrice] = useState([]);
   const [placesAmount, setPlacesAmount] = useState([]);
   const [beginDate, setBeginDate] = useState([]);
@@ -28,7 +29,20 @@ function CreateTraining(props) {
   useEffect(() => {
     cities();
     getUserData();
+    getData();
   }, []);
+
+  async function getData() {
+    let result = await fetch(
+      "http://localhost:8080/trainings/" + props.router.params.id,
+      {
+        credentials: "include",
+        method: "GET",
+      }
+    );
+    result = await result.json();
+    setTrainingData(result);
+  }
 
   async function cities() {
     let result = await fetch("http://localhost:8080/places", {
@@ -39,18 +53,9 @@ function CreateTraining(props) {
     setData(result);
   }
 
-  async function getUserData() {
-    let result = await fetch("http://localhost:8080/users/role/2", {
-      credentials: "include",
-      method: "GET",
-    });
-    result = await result.json();
-    setUserData(result);
-  }
-
-  async function addCourse() {
-    let result = await fetch("http://localhost:8080/trainings", {
-      method: "POST",
+  async function updateTrainingFunc() {
+    await fetch("http://localhost:8080/trainings/7", {
+      method: "PATCH",
       credentials: "include",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -63,31 +68,52 @@ function CreateTraining(props) {
         end_date: endDate,
         enrolment_begin_date: enrolmentBeginDate,
         enrolment_end_date: enrolmentEndDate,
-        course_id: props.router.params.id,
         place_id: place,
         instructor_id: instructor,
       }),
     });
-    result = await result.json();
+    console.warn("training updated?");
+    console.warn(price);
+    console.warn(placesAmount);
+    console.warn(beginDate);
+    console.warn(endDate);
+    console.warn(enrolmentBeginDate);
+    console.warn(enrolmentEndDate);
+    console.warn(place);
+    console.warn(instructor);
   }
+
+  async function getUserData() {
+    let result = await fetch("http://localhost:8080/users/role/2", {
+      credentials: "include",
+      method: "GET",
+    });
+    result = await result.json();
+    setUserData(result);
+  }
+
+  console.warn(trainigData);
 
   return (
     <div>
       <Header />
       <div className="col-sm-6 offset-sm-3">
-        <br />
+        <h1> Price:</h1>
         <input
           type="text"
-          className="form-control"
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="price"
+          defaultValue={trainigData.price}
+          onChange={(e) => {
+            setPrice(e.target.value);
+          }}
         />{" "}
-        <br />
+        <br /> <br />
+        <h1> Amount of places:</h1>
         <input
           type="text"
-          className="form-control"
-          onChange={(e) => setPlacesAmount(e.target.value)}
-          placeholder="amount of places"
+          defaultValue={trainigData.free_places_amount}
+          onChange={(e) => {
+            setPlacesAmount(e.target.value);
+          }}
         />{" "}
         <br />
         <input
@@ -151,12 +177,12 @@ function CreateTraining(props) {
         </select>
         <br />
         <br />
-        <button onClick={addCourse} className="button">
-          <span>Add course</span>
+        <button onClick={updateTrainingFunc} className={"button"}>
+          <span>Update Training</span>
         </button>
       </div>
     </div>
   );
 }
 
-export default withRouter(CreateTraining);
+export default withRouter(UpdateTraining);

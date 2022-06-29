@@ -2,6 +2,7 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import logo from "./images/logo.png";
 
 function Header() {
   let user = JSON.parse(localStorage.getItem("user-info"));
@@ -16,19 +17,39 @@ function Header() {
     <div>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">ZMITAC Learning</Navbar.Brand>
+          <Navbar.Brand href="/login">
+            <img src={logo} alt="logo" width="120" />
+          </Navbar.Brand>
           <Nav className="me-auto navbar_wrapper">
             {localStorage.getItem("user-info") ? (
               <>
-                <Link to="/"> courses </Link>
-                <Link to="/trainingList"> trainings </Link>
-                <Link to="/createCourseForWorker"> create course </Link>
-                <Link to="/GetUsers"> users </Link>
+                <Link to="/" className="link">
+                  {" "}
+                  Courses{" "}
+                </Link>
+                <Link to="/trainingList" className="link">
+                  {" "}
+                  Trainings{" "}
+                </Link>
+                <Link to="/createCourseForWorker" className="link">
+                  {" "}
+                  Create course{" "}
+                </Link>
+                <Link to="/GetUsers" className="link">
+                  {" "}
+                  Users{" "}
+                </Link>
               </>
             ) : (
               <>
-                <Link to="/login"> login </Link>
-                <Link to="/register"> register </Link>
+                <Link to="/login" className="link">
+                  {" "}
+                  Login{" "}
+                </Link>
+                <Link to="/register" className="link">
+                  {" "}
+                  Register{" "}
+                </Link>
               </>
             )}
           </Nav>

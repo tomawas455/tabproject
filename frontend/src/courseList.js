@@ -78,7 +78,7 @@ function CourseList() {
                 <td>
                   <td>
                     {" "}
-                    {item.multimedias.slice(0,1).map((allMultimedias) => (
+                    {item.multimedias.slice(0, 1).map((allMultimedias) => (
                       <img
                         style={{ width: 100 }}
                         src={allMultimedias.filename}
@@ -104,13 +104,13 @@ function CourseList() {
                     ?.map((allTags) => allTags.name + " ")}
                 </td>
                 <td>
-                  <Link to={"/updateProduct/" + item.id}>
-                    <span className="update">Update</span>
+                  <Link to={"/updateProduct/" + item.id} className="link">
+                    <span className="button">Update</span>
                   </Link>
-                    <br/> <br/>
-                    <Link to={"/createTraining/" + item.id}>
-                        <span className="create">Create training</span>
-                    </Link>
+                  <br /> <br />
+                  <Link to={"/createTraining/" + item.id} className="link">
+                    <span className="button">Create training</span>
+                  </Link>
                 </td>
               </tr>
             ))}

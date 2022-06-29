@@ -61,9 +61,8 @@ function Register() {
           placeholder="password"
         />
         <br />
-        <button onClick={signUp} className="btn btn-primary">
-          {" "}
-          Sign Up{" "}
+        <button onClick={signUp} className="button">
+          <span> Sign Up </span>
         </button>
       </div>
     </div>
