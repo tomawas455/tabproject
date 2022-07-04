@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "982b7b47-c94b-4173-a8d7-1768ba1eee9b",
+		"_postman_id": "0a95b227-c573-4145-ae63-b72e30312c11",
 		"name": "tabproject",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1158,6 +1158,27 @@
 								"tags"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Raports",
+			"item": [
+				{
+					"name": "Worker Raport",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "User Raport",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
