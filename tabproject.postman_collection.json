@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0a95b227-c573-4145-ae63-b72e30312c11",
+		"_postman_id": "4ca8a125-dc4f-4a8f-91b9-08e204e0b62a",
 		"name": "tabproject",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1168,17 +1168,65 @@
 			"item": [
 				{
 					"name": "Worker Raport",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\": \"2022-06-20T15:50:00.000000Z\",\r\n    \"to_date\": \"2022-07-20T15:50:00.000000Z\",\r\n    \"courses\": [1, 2],\r\n    \"trainings\": [1, 2, 3, 4],\r\n    \"authors\": [1, 2],\r\n    \"instructors\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/raports/worker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"raports",
+								"worker"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "User Raport",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\": \"2022-06-20T15:50:00.000000Z\",\r\n    \"to_date\": \"2022-07-20T15:50:00.000000Z\",\r\n    \"courses\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/raports/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"raports",
+								"user"
+							]
+						}
 					},
 					"response": []
 				}
