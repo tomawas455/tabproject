@@ -10,7 +10,7 @@ bp = Blueprint('raports', __name__, url_prefix='/raports')
 
 
 @only_worker
-@bp.route('/worker', methods=['GET'])
+@bp.route('/worker', methods=['GET', 'POST'])
 def get_worker_raport():
     data_json = request.get_json()
     filters = []
@@ -45,7 +45,7 @@ def get_worker_raport():
     }
 
 
-@bp.route('/user', methods=['GET'])
+@bp.route('/user', methods=['GET', 'POST'])
 @only_user
 def get_user_raport():
     data_json = request.get_json()
