@@ -1,16 +1,14 @@
 .App {
   text-align: center;
+  background-color: white;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  background-color: white /*#f3f8ff*/;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar_wrapper a {
+  padding-left: 30px;
 }
 
 .App-header {
@@ -28,11 +26,168 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #003884;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  padding: 8px;
+  width: 110px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #3067b2;
+  text-decoration: underline;
+}
+
+.search {
+  border-radius: 4px;
+  width: 100%;
+  float: center;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.button-long {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #003884;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  padding: 8px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button-long span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-long span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-long:hover span {
+  padding-right: 25px;
+}
+
+.button-long:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.moreInfo {
+  background-color: darkorange;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.nameoftraining {
+  font-size: 42px;
+}
+
+.container {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.barL {
+  float: left;
+  padding: 10px;
+  width: 850px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: gray;
+  min-height: 400px;
+}
+
+.barR {
+  float: left;
+  padding: 10px;
+  width: 100px;
+  text-align: left;
+  font-size: 16px;
+  image-align: center;
+}
+
+.dateandcity {
+  color: black;
+  padding: 5px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.description {
+  color: black;
+  padding: 5px;
+  font-size: 24px;
+  text-align: left;
+}
+
+.price {
+  color: green;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 42px;
+  text-align: center;
+}
+
+.coments {
+  float: left;
+  padding: 10px;
+  width: 850px;
 }
