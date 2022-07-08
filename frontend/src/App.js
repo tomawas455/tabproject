@@ -13,6 +13,8 @@ import CreateTraining from "./createTraining";
 import MoreInfoAboutTraining from "./moreInfoAboutTraining";
 import ParticipationForm from "./participationForm";
 import UpdateTraining from "./UpdateTraining";
+import RaportsForUser from "./raportsForUser";
+import RaportsForWorker from "./raportsForWorker";
 
 function App() {
   return (
@@ -38,6 +40,15 @@ function App() {
             path="/trainingList"
             element={<Protected Cmp={TrainingList} />}
           />
+          <Route
+              exact
+              path="/raports"
+              element={<Protected Cmp={RaportsForUser} />}
+          /> <Route
+            exact
+            path="/raportsForWorker"
+            element={<Protected Cmp={RaportsForWorker} />}
+        />
           <Route
             exact
             path="updateProduct/:id"

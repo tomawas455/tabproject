@@ -23,10 +23,23 @@ function MoreInfoAboutTraining(props) {
   const [text, setText] = useState([]);
   const [rate, setRate] = useState([]);
   const [amountOfPeople, setAmountOfPeople] = useState([]);
+  const [whoLogged, setWhoLogged] = useState([]);
 
   useEffect(() => {
     getData();
+    getLogged();
   }, [props]);
+
+
+
+  async function getLogged() {
+    let result = await fetch("http://localhost:8080/users/current", {
+      credentials: "include",
+      method: "GET",
+    });
+    result = await result.json();
+    setWhoLogged(result.role.name);
+  }
 
   async function getData() {
     let result = await fetch(
@@ -61,6 +74,7 @@ function MoreInfoAboutTraining(props) {
     console.warn(text);
     console.warn(rate);
     console.warn(props.router.params.id);
+    alert("Comment has been added !");
   }
 
   let freePlacesAmount = data.free_places_amount;
@@ -126,9 +140,9 @@ function MoreInfoAboutTraining(props) {
           <button onClick={addComment} className={"button-long"}>
             <span> Add comment </span>
           </button>
-          <Link to={"/UpdateTraining/" + data.id} className={"button"}>
+          {whoLogged === 'worker' ? (<Link to={"/UpdateTraining/" + data.id} className={"button"}>
             <span>Update </span>
-          </Link>
+          </Link>) : null}
         </div>
       </div>
     </div>

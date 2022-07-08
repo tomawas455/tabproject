@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
+import Multiselect from "multiselect-react-dropdown";
 
 function CreateCourseForWorker() {
   const [selects, setSelects] = useState();
@@ -44,6 +45,7 @@ function CreateCourseForWorker() {
     });
     result = await result.json();
     console.log("result", items);
+    alert("You have correctly created course !");
   }
 
   return (
@@ -74,12 +76,11 @@ function CreateCourseForWorker() {
         <br />
         <h3>Choose your tag</h3>
         <br />
-        <select value={tags} onChange={(e) => setTags([e.target.value])}>
-          <option />
-          {data.map((item) => (
-            <option value={item.id}> {item.name} </option>
-          ))}
-        </select>
+        <Multiselect
+          onSelect={(e) => setTags(e.map((item) => item.id))}
+          options={data}
+          displayValue={"name"}
+        />
         <br />
         <br />
         <input

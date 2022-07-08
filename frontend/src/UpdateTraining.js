@@ -32,6 +32,7 @@ function UpdateTraining(props) {
     getData();
   }, []);
 
+
   async function getData() {
     let result = await fetch(
       "http://localhost:8080/trainings/" + props.router.params.id,

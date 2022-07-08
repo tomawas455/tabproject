@@ -1,17 +1,30 @@
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./images/logo.png";
 
 function Header() {
   let user = JSON.parse(localStorage.getItem("user-info"));
   const navigate = useNavigate();
+  const [data, setData] = useState("");
 
   function logOut() {
     localStorage.clear();
     navigate("/login");
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      let result = await fetch("http://localhost:8080/users/current", {
+        credentials: "include",
+        method: "GET",
+      });
+      result = await result.json();
+      setData(result.role.name);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -23,22 +36,40 @@ function Header() {
           <Nav className="me-auto navbar_wrapper">
             {localStorage.getItem("user-info") ? (
               <>
-                <Link to="/" className="link">
-                  {" "}
-                  Courses{" "}
-                </Link>
+                {data === "worker" ? (
+                  <Link to="/" className="link">
+                    {" "}
+                    Courses{" "}
+                  </Link>
+                ) : null}
                 <Link to="/trainingList" className="link">
                   {" "}
                   Trainings{" "}
                 </Link>
-                <Link to="/createCourseForWorker" className="link">
-                  {" "}
-                  Create course{" "}
-                </Link>
-                <Link to="/GetUsers" className="link">
-                  {" "}
-                  Users{" "}
-                </Link>
+                {data === "worker" ? (
+                  <Link to="/createCourseForWorker" className="link">
+                    {" "}
+                    Create course{" "}
+                  </Link>
+                ) : null}
+                {data === "user" ? (
+                    <Link to="/raports" className="link">
+                      {" "}
+                      Raports{" "}
+                    </Link>
+                ) : null}
+                {data === "worker" ? (
+                    <Link to="/raportsForWorker" className="link">
+                      {" "}
+                      Raports{" "}
+                    </Link>
+                ) : null}
+                {data === "administrator" ? (
+                  <Link to="/GetUsers" className="link">
+                    {" "}
+                    Users{" "}
+                  </Link>
+                ) : null}
               </>
             ) : (
               <>

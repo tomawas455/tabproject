@@ -20,8 +20,6 @@ function TrainingList() {
     fetchData();
   }, []);
 
-  console.warn(data);
-
   return (
     <div>
       <Header />
@@ -54,27 +52,50 @@ function TrainingList() {
             <td> </td>
             <td></td>
           </tr>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td> {item.author.name} </td>
-              <td> {item.course.name} </td>
-              <td> {item.course.description} </td>
-              <td> {item.course.tags.map((allTags) => allTags.name + " ")} </td>
-              <td> {item.price + " $"} </td>
-              <td> {item.instructor.name} </td>
-              <td> {item.place.address} </td>
-              <td> {item.place.city.city} </td>
-              <td> {item.places_amount} </td>
-              <td>
-                <Link
-                  to={"/moreInfoAboutTraining/" + item.id}
-                  className={"link"}
-                >
-                  <span className="button">More info!</span>
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {data
+            .filter((val) => {
+              if (searchTerm == "") {
+                return val;
+              } else if (
+                val.course.name.toLowerCase().includes(searchTerm.toLowerCase())
+              ) {
+                return val;
+              } else if (
+                val.author.name.toLowerCase().includes(searchTerm.toLowerCase())
+              ) {
+                return val;
+              } else if (
+                val.course.description
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              ) {
+                return val;
+              }
+            })
+            .map((item) => (
+              <tr key={item.id}>
+                <td> {item.author.name} </td>
+                <td> {item.course.name} </td>
+                <td> {item.course.description} </td>
+                <td>
+                  {" "}
+                  {item.course.tags.map((allTags) => allTags.name + " ")}{" "}
+                </td>
+                <td> {item.price + " $"} </td>
+                <td> {item.instructor.name} </td>
+                <td> {item.place.address} </td>
+                <td> {item.place.city.city} </td>
+                <td> {item.places_amount} </td>
+                <td>
+                  <Link
+                    to={"/moreInfoAboutTraining/" + item.id}
+                    className={"link"}
+                  >
+                    <span className="button">More info!</span>
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </thead>
       </Table>
     </div>

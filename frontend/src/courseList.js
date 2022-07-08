@@ -23,8 +23,6 @@ function CourseList() {
     fetchData();
   }, []);
 
-  console.warn(data);
-
   return (
     <div>
       <Header />

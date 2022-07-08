@@ -67,13 +67,8 @@ def get_user_raport():
     for training in trainings_page.items:
         if training.id not in already_counted_trainings:
             res.append(training.to_dict())
-<<<<<<< HEAD
             user_expense = training.price * sum(1 for participation in participations 
-                                                if participation.payer_id == g.user.id 
-=======
-            user_expense = training.price * sum(1 for participation in participations
                                                 if participation.payer_id == g.user.id
->>>>>>> f91405d (Create list of courses and trainings, update them and more)
                                                 and participation.training_id == training.id)
             res[-1]["user_expense"] = user_expense
             already_counted_trainings.append(training.id)
@@ -85,8 +80,6 @@ def get_user_raport():
         "page": trainings_page.page,
         "page_size": trainings_page.per_page,
         "is_last": not trainings_page.has_next
-<<<<<<< HEAD
+
     }
-=======
-    }
->>>>>>> f91405d (Create list of courses and trainings, update them and more)
+

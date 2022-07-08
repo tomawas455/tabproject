@@ -23,6 +23,12 @@ function Login() {
         email: email,
         password: password,
       }),
+    }).then((response) => {
+      if (response.status >= 400 && response.status < 600) {
+        alert("Wrong Login or Password !", "Title");
+        throw new Error("Bad response from server");
+      }
+      return response;
     });
     result = await result.json();
     localStorage.setItem("user-info", JSON.stringify(result));

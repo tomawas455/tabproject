@@ -26,14 +26,16 @@ function ParticipationForm(props) {
       {
         email: email,
         name: name,
-        surname: surname,
         password: password,
+        surname: surname,
       },
     ]);
   };
 
+  let trainingId = props.router.params.id;
+
   async function addCourse() {
-    let result = await fetch("http://localhost:8080/participations", {
+    let result = await fetch("http://localhost:8080/participations/", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -41,12 +43,28 @@ function ParticipationForm(props) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        training_id: props.router.params.id,
+        training_id: parseInt(trainingId),
         users_to_register: participant,
       }),
+    }).then((response) => {
+      if (response.statusText === "BAD REQUEST") {
+        console.warn(response);
+        alert("Someone already enroled on this course!", "Title");
+        throw new Error("Bad response from server");
+      }
+      console.warn(response);
+      alert("Sucessfuly updated couse !");
     });
+    result = await result.json();
+    console.warn("result", result);
   }
 
+  console.warn(
+    JSON.stringify({
+      training_id: parseInt(trainingId),
+      users_to_register: participant,
+    })
+  );
   return (
     <div>
       <Header />
